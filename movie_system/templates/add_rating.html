@@ -1,0 +1,31 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Rating</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'add_rating.css' %}">
+   
+</head>
+<body>
+    
+{% block content %}
+<div class="container py-5">
+    
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ rating.as_p }}
+        <input type="submit" value="Add">
+        <a href="{% url 'book_movie:rating' %}" class="btn-back">Back to Ratings</a>
+    </form>
+    
+    
+</div>
+{% endblock %}
+</body>
+</html>

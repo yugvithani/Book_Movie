@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating</title>
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; 
+        color: #333; 
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #ff5722;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    form input[type="text"],
+    form input[type="submit"] {
+        padding: 12px;
+        border-radius: 25px;
+        border: 1px solid #ddd; 
+        transition: border-color 0.3s;
+    }
+
+    form input[type="text"] {
+        width: 200px;
+    }
+
+    form input[type="submit"] {
+        background-color: blue; 
+        color: #fff; 
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #2196f3; 
+    }
+
+</style>
+<body>
+    <div class="container">
+        {%if not user.is_staff%}
+        <form method="POST" action="add/">
+            {% csrf_token %}
+            <input type="submit" value="Add">
+        </form>
+        {%endif%}
+
+        <form action="{% url 'book_movie:movie_list' %}">
+        <button type="submit" class="btn btn-secondary">Back to Movie List</button>
+        </form>
+        <h1>Rating</h1>
+        <div class="ratings">
+            <ul>
+            {% for rating in ratings %}
+            <li>
+                <div class="rating">
+                    <h3>{{ rating.rating }}</h3>
+                    <h3>{{ rating.review }}</h3>
+                    <br>
+                </div>
+            </li>
+            {% endfor %}
+            </ul>
+            
+        </div>
+    </div>
+
+</body>
+</html>

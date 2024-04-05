@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Detail</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'movie_detail.css' %}">
+</head>
+<body>
+    {% if user.is_staff %}
+            <div class="header">
+                <form method="POST" id="updateForm">
+                    {% csrf_token %}
+                    <input type="hidden" id="id" value="{{movie.movie_id}}">
+                    <input type="submit" value="Edit">
+                </form>
+            </div>
+            <div  class="form-container">
+                <form method="POST" id="deleteForm" action="">
+                    {% csrf_token %}
+                    <input type="hidden" id="delete_id" name="id" class="input-field" value="{{movie.movie_id}}">
+                    <input type="submit" value="Delete movie" class="button delete-movie-button">
+                </form>
+            </div>
+        {% endif %}
+        <form method="POST" action="{{movie.movie_id}}/book/">
+            {% csrf_token %}
+            
+            <h1>Movie:{{movie.movie_title}}</h1>
+            <img src="{{ movie.img.url }}" alt="{{ movie.movie_title }}">
+            <p><b>Description:</b> {{movie.description}}</p>
+            <p><b>Cast:</b>{{movie.cast}}</p>
+            <p><b>Grade:</b> {{movie.grade}}</p>
+            <p><b>Movie Type:</b>{{movie.movie_type}}</p>
+            <p><b>Release Date:</b> {{movie.release_date}}</p>
+            <p><b>Duration:</b> {{ movie.duration }}</p>
+            <p><b>Rating:</b> {{ movie.rating }}</p>
+            {%if not user.is_staff %}
+            <!-- <a href="{% url 'book_movie:movie_show' movie_id=movie.movie_id %}"> -->
+                <input type="submit" value="Book">
+                <!-- <input type="submit" value="Book"> -->
+            <!-- </a> -->
+            {%endif%}
+        </form>
+
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            var idValue = document.getElementById('id').value; 
+            this.action = "update_movie/" + idValue; 
+            this.submit(); 
+        });
+        document.getElementById('deleteForm').addEventListener('submit', function(event) {
+            event.preventDefault(); 
+            var deleteIdValue = parseInt(document.getElementById('delete_id').value); 
+            this.action = "delete_movie/" + deleteIdValue; 
+            this.submit(); 
+        });
+    </script>
+</body>
+</html>

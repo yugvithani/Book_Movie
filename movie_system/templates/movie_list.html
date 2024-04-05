@@ -1,0 +1,78 @@
+{% include "home.html" %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie_List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'movie_list.css' %}">
+    <style>
+
+        .button-container {
+            margin-top: 20px;
+        }
+
+        .button-container form {
+            display: inline-block;
+            margin-right: 10px;
+        }
+
+        .button-container form input[type="submit"] {
+            background-color: blue; 
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: background-color 0.3s;
+        }
+
+        .button-container form input[type="submit"]:hover {
+            background-color: #2196f3; 
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        {% if user.is_staff %}
+            <div class="button-container">
+                <form method="POST" action="add_movie/">
+                    {% csrf_token %}
+                    <input type="submit" value="Add movie">
+                </form>
+                <form method="POST" action="theater_list/">
+                    {% csrf_token %}
+                    <input type="submit" value="Theaters">
+                </form>
+                <form method="POST" action="show_list/">
+                    {% csrf_token %}
+                    <input type="submit" value="Shows">
+                </form>
+            </div>
+        {% endif %}    
+        <div class="button-container">
+            <form method="POST" action="rating/">
+                {% csrf_token %}
+                <input type="submit" value="Rating Of Site">
+            </form>
+        </div>
+        
+        <br>
+    </div>
+    <h1>All Movie List</h1>
+    <div class="movies">
+        {% for movie in movies %}
+            <div class="movie">
+                <a href="{% url 'book_movie:movie_details' movie_id=movie.movie_id %}">
+                    <img src="{{ movie.img.url }}" alt="{{ movie.movie_title }}">
+                </a>
+                <h2>{{ movie.movie_title }}</h2>
+            </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

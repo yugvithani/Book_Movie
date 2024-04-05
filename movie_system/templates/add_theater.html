@@ -1,0 +1,26 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Theater</title>
+    <style>
+        /* Your existing styles here */
+    </style>
+</head>
+<body>
+<div class="container py-5">
+    <h2>Add Theater</h2>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ theater_form.as_p }}
+        <!-- Set the initial value of the user field to the logged-in user's ID -->
+        <input type="hidden" name="user" value="{{ request.user.id }}">
+        <input type="submit" value="Add">
+    </form>
+</div>
+</body>
+</html>

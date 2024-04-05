@@ -1,0 +1,24 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delete Movie</title>
+</head>
+<body>
+{% block content %}
+<div class="main">
+    <form method="POST">
+        {% csrf_token %}
+        Are you want to delete this theater ?
+        <input type="submit" value="Yes" />
+        <a href="/">Cancel </a>
+    </form>
+</div>
+{% endblock %}
+</body>
+</html>

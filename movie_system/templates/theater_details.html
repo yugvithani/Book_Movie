@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theater Detail</title>
+    {% load static %}
+</head>
+<style>
+
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; 
+        color: #333; 
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h2 {
+        color: #ff7e67;
+    }
+
+    p {
+        margin: 10px 0;
+    }
+
+
+    form {
+        margin-top: 20px;
+    }
+
+    form input[type="submit"] {
+        padding: 12px 20px;
+        border-radius: 25px;
+        border: none;
+        background-color: blue; 
+        color: #fff; 
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #2196f3; 
+    }
+
+</style>
+<body>
+    
+    <div class="container">
+        {% if user.is_staff%}
+            <form id="updateForm" method="POST" action="">
+                {% csrf_token %}
+                <input type="hidden" id="id" name="id" value="{{theater.user_id}}">
+                <input type="submit" value="Edit">
+            </form>
+            <form id="deleteForm" method="POST" action="">
+                {% csrf_token %}
+                <input type="hidden" id="delete_id" name="id" value="{{theater.user_id}}">
+                <input type="submit" value="Delete">
+            </form>
+        {% endif %}
+        <form method="POST" action="theater/">
+        {% csrf_token %}
+        <h2>Theater Name : {{theater.Theater_name}}</h2>
+        <p><b>City : </b> {{theater.city}}</p>
+        <p><b>Address : </b>{{theater.address}}</p>
+        <p><b>Total Screens : </b> {{theater.total_screens}}</p>
+        <p><b>User : </b>{{theater.user}}</p>
+        </form>
+    </div>
+
+    <script>
+        document.getElementById('updateForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+            var idValue = document.getElementById('id').value; // Get the value of the id field
+            this.action = "update_Theater/" + idValue; // Set the action URL dynamically
+            this.submit(); // Submit the form
+        });
+
+        document.getElementById('deleteForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting
+            var deleteIdValue = document.getElementById('delete_id').value; // Get the value of the id field
+            this.action = "delete_theater/" + deleteIdValue; // Set the action URL dynamically
+            this.submit(); // Submit the form
+        });
+    </script>
+
+</body>
+</html>

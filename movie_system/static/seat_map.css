@@ -1,0 +1,35 @@
+/* .seat {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #343434;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+}  */
+.booked {
+    width: 30px;
+    height: 30px;
+    border: 1px solid #343434;
+    display: inline-block;
+    margin: 5px;
+    background-color: rgb(99, 99, 99);
+    pointer-events: none; 
+}
+.selected{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #343434;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    background-color: rgb(142, 255, 85);
+}
+.not_selected{
+    width: 30px;
+    height: 30px;
+    border: 1px solid #343434;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    /* background-color: rgb(255, 255, 255);*/
+}

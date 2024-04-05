@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Section</title>
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .booking-list {
+            margin-top: 20px;
+        }
+        
+        .booking {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+
+        a {
+            color: black; 
+            text-decoration: none;
+        }        
+        
+        .booking h2 {
+            margin-top: 0;
+        }
+        
+        .booking p {
+            margin: 5px 0;
+        }
+    </style>
+</head>
+<body>
+    {% load bootstrap5 %}
+    <div class="container">
+        <h1>My Bookings</h1>
+        
+        <div class="booking-list">
+            {% if tickets %}
+                {% for ticket in tickets %}
+                    <div class="booking">
+                        <a href="{%url 'book_movie:full_ticket' ticket_no=ticket.ticket_no%}">
+                        <h2>Ticket No: {{ ticket.ticket_no }}</h2>
+                        <p>Movie: {{ ticket.Show_id.movie_id.movie_title }}</p>
+                        <p>Show Date: {{ ticket.Show_id.Show_date }}</p>
+                        <p>Timing: {{ ticket.Show_id.start_time }} - {{ticket.Show_id.end_time}}</p>
+                        <p>Booking Status: {{ ticket.booking_status }}</p>
+                        <p>Price: ₹{{ ticket.amount }}</p>
+                        </a>
+                    </div>
+                {% endfor %}
+            {% else %}
+                <p>No bookings found.</p>
+            {% endif %}
+            <form action="{%url 'book_movie:movie_list'%}" align="left">
+                <button type="submit">Home</button>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>

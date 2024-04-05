@@ -1,0 +1,32 @@
+{% load bootstrap5 %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Ticket</title>
+    {% bootstrap_css %}
+</head>
+<body class="p-5">
+    <div class="container">
+        <h1 class="display-5">Ticket: {{ ticket.ticket_no }}</h1>
+        <br>    
+        <div class="container">
+            
+                <p><b>Movie:</b> {{ ticket.Show_id.movie_id.movie_title }}</p>
+                <p><b>Theater: </b> {{ ticket.Show_id.Theater_name }}</p>
+                <p><b>Show date:</b> {{ ticket.Show_id.Show_date }}</p>
+                <p><b>Timing:</b> {{ ticket.Show_id.start_time }} - {{ ticket.Show_id.end_time }}</p>
+                <p><b>Screen no:</b> {{ ticket.Show_id.Screen_no }}</p>
+                <p><b>Price: </b> {{ ticket.amount }}</p>
+            
+                <p><b>Seats: </b> 
+                    {% for seat in seats %}
+                        {{ seat.seat_row }}-{{ seat.seat_col }}{% if not forloop.last %}, {% endif %}
+                    {% endfor %}
+                </p>
+        </div>
+    </div>
+    {% bootstrap_javascript %}
+</body>
+</html>

@@ -1,0 +1,154 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theater List</title>
+    {% load static %}
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; 
+        color: #333; 
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #ff5722;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    form input[type="text"],
+    form input[type="submit"] {
+        padding: 12px;
+        border-radius: 25px;
+        border: 1px solid #ddd; 
+        transition: border-color 0.3s;
+    }
+
+    form input[type="text"] {
+        width: 200px;
+    }
+
+    form input[type="submit"] {
+        background-color: blue; 
+        color: #fff; 
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #2196f3; 
+    }
+
+    .theaters {
+        margin-top: 20px;
+    }
+
+    .theater {
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f8bbd0; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+    .theater a {
+        color: #2196f3; 
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .theater a:hover {
+        color: #1565c0; 
+    }
+
+    .theater:hover {
+        transform: translateY(-5px);
+    }
+
+    .add-button-container {
+        text-align: right;
+        margin-bottom: 20px;
+    }
+</style>
+<body>
+    <div class="container">
+        {% if user.is_staff%}
+            <div class="add-button-container">
+                <form method="POST" action="add_theater/">
+                    {% csrf_token %}
+                    <input type="submit" value="Add">
+                </form>
+            </div>
+        {% endif %}
+        <center><h1>All Theater List</h1></center>
+        <div class="theaters">
+            {% for theater in theaters %}
+                <div class="theater">
+                     
+                </div>
+                <br>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theater List</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'theater_list.css' %}">
+</head>
+<body>
+    
+
+        <form method="get" action="{% url 'book_movie:theater_list' movie_id=movie_id  %}">
+        <label for="selected_date">Select Date:</label>
+        <input type="date" id="selected_date" name="selected_date">
+        <button type="submit">Submit</button>
+        </form>
+    
+    
+    
+    {% if theaters %}
+    <h1>Theater List</h1>
+    <ul>
+        {% for show in shows %}
+            <li>
+                <h2>{{ show.Theater_name.Theater_name }}</h2>
+                <a href="{% url 'book_movie:seat_map' Show_id=show.Show_id %}">
+                    {{ show.start_time }} - {{ show.end_time }}
+                </a>
+               
+                <p>Release Date: {{ show.Show_date }}</p>
+                <p>Screen No: {{ show.Screen_no }}</p>
+            </li>
+        {% endfor %} 
+    </ul>
+    {% else %}
+    <p>No theaters available for the selected date.</p>
+    {% endif %}
+</body>
+</html>

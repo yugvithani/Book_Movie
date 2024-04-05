@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Show List</title>
+    {% load static %}
+</head>
+<style>
+    body {
+        font-family: 'Roboto', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: #f4f4f4; 
+        color: #333; 
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 20px auto;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        color: #ff5722;
+    }
+
+    form {
+        margin-bottom: 20px;
+    }
+
+    form input[type="text"],
+    form input[type="submit"] {
+        padding: 12px;
+        border-radius: 25px;
+        border: 1px solid #ddd; 
+        transition: border-color 0.3s;
+    }
+
+    form input[type="text"] {
+        width: 200px;
+    }
+
+    form input[type="submit"] {
+        background-color: blue; 
+        color: #fff; 
+        border: none;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    form input[type="submit"]:hover {
+        background-color: #2196f3; 
+    }
+
+    .shows {
+        margin-top: 20px;
+    }
+
+    .show {
+        margin-bottom: 20px;
+        padding: 15px;
+        border-radius: 8px;
+        background-color: #f8bbd0; 
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s;
+    }
+
+    .show a {
+        color: #2196f3; 
+        text-decoration: none;
+        transition: color 0.3s;
+    }
+
+    .show a:hover {
+        color: #1565c0; 
+    }
+
+    .show:hover {
+        transform: translateY(-5px);
+    }
+
+    .add-button-container {
+        text-align: right;
+        margin-bottom: 20px;
+    }
+
+    .show-time {
+        display: inline-block;
+        padding: 5px 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-right: 10px;
+    }
+    
+    .theater {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 20px;
+        border-radius: 5px;
+    }
+</style>
+<body>
+    <div class="container">
+        {% if user.is_staff%}
+            <div class="add-button-container">
+                <form method="GET" action="add_show/">
+                    {% csrf_token %}
+                    <input type="submit" value="Add">
+                </form>
+            </div>
+        {% endif %}
+        <BR>
+        <center><h1>All show List</h1></center>
+        {% comment %} <div class="shows">
+            {% for show in shows %}
+                <div class="show">
+                     <a href="{% url 'book_movie:ShowTime' Theater_name=theater.Theater_name %}">
+                        {{ theater.Theater_name }}
+                    </a> 
+                    <a href="{% url 'book_movie:show_details' id=show.Show_id %}">
+                        {{ show.start_time }}
+                    </a> 
+                    
+                </div>
+                <br>
+            {% endfor %} 
+            
+        </div> {% endcomment %}
+        {%for theater, movie_show in theater_with_show.items%}
+            <div class="theater">
+                <h3>{{theater}}</h3>
+                <div>
+                    {%for show in movie_show%}
+                        <a href="{% url 'book_movie:show_details' id=show.Show_id %}">
+                        <span class="show-time"> {{show.start_time}} </span>
+                        </a>
+                    {%endfor%}
+                </div>
+            </div>
+        {%endfor%}
+
+    </div>
+   
+</body>
+</html>

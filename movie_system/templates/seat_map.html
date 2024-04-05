@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seat Map</title>
+    {% load static %}
+    <!-- <link rel="stylesheet" href="{% static 'seat_map.css' %}"> -->
+    <style>
+        .booked {
+        width: 30px;
+        height: 30px;
+        border: 1px solid #343434;
+        display: inline-block;
+        margin: 5px;
+        background-color: rgb(99, 99, 99);
+        pointer-events: none; 
+    }
+    .selected{
+        width: 30px;
+        height: 30px;
+        border: 1px solid #343434;
+        display: inline-block;
+        margin: 5px;
+        cursor: pointer;
+        background-color: rgb(142, 255, 85);
+    }
+    .not_selected{
+        width: 30px;
+        height: 30px;
+        border: 1px solid #343434;
+        display: inline-block;
+        margin: 5px;
+        cursor: pointer;
+        /* background-color: rgb(255, 255, 255);*/
+    }
+
+    </style>
+</head>
+<body>
+    {%if not user.is_staff %}
+        <center>
+            <h2> Seat Map</h2>
+            <script>
+                var selectedSeats = [];
+                function change(id){
+                    var ele=document.getElementById(id);
+                    if (ele.classList.contains('not_selected')) {
+                        ele.classList.remove('not_selected');
+                        ele.classList.add('selected');
+                        selectedSeats.push(id);
+                    } else if (ele.classList.contains('selected')) {
+                        ele.classList.remove('selected');
+                        ele.classList.add('not_selected');
+                        var index = selectedSeats.indexOf(id);
+                        if (index !== -1) {
+                            selectedSeats.splice(index, 1);
+                        }
+                    }
+                    updateSelectedSeatsList();
+                }
+
+                function updateSelectedSeatsList() {
+                    var listElement = document.getElementById('selected_seats_list');
+                    // Clear existing list
+                    listElement.innerHTML = '';
+                    // Add selected seats to the list
+                    selectedSeats.forEach(function(id) {
+                        var listItem = document.createElement('li');
+                        listItem.textContent = id;
+                        listElement.appendChild(listItem);
+                    });
+                    // when 0 seats select then payment button is not visible
+                    updatePaymentButtonState();
+                }
+
+                function addSelectedSeatsToSeatsList() {
+                    var selectedSeatsString = JSON.stringify(selectedSeats);
+                    // Set the value of the hidden input field
+                    document.getElementById('selectedSeatsStr').value = selectedSeatsString;
+                    // Submit the form
+                    console.log(selectedSeatsString)
+                    document.getElementById('payment_form').submit();
+                    
+                    // Clear selected seats array
+                    //selectedSeats = [];
+                    // Update selected seats list in HTML
+                    //updateSelectedSeatsList();
+                }
+
+                function updatePaymentButtonState() {
+                    var paymentButton = document.getElementById('payment_button');
+                    paymentButton.disabled = selectedSeats.length === 0;
+                }
+
+            </script>
+        <h5>Screen is this way</h5>
+        {% for row in num %}
+            {% for col in num %}
+                <div id="{{row}}-{{col}}" class="{% for st in seats %}{% if st.seat_row == row and st.seat_col == col %} booked{% endif %}{% endfor %} not_selected" onclick="change(this.id)"></div>
+            {% endfor %}
+            <br>
+        {% endfor %} 
+
+        </center>
+        <h3>Selected Seats:</h3>
+        <ul id="selected_seats_list"></ul>
+        <form id="payment_form" action="/payment/" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <input type="hidden" name="selectedSeatsStr" id="selectedSeatsStr">
+
+            <button type="submit" id="payment_button" disabled onclick="addSelectedSeatsToSeatsList()">Payment</button>
+        </form>
+        {% endif %}
+    </body>
+</html>

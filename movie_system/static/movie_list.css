@@ -1,0 +1,91 @@
+/* Reset default browser styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  /* Body styles */
+  body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    padding: 20px;
+  }
+  
+  /* Heading styles */
+  h1 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  /* Movies container styles */
+  .movies {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  /* Movie card styles */
+  .movie {
+    width: 300px;
+    margin: 20px;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+    border: 2px solid #ddd; /* Added border */
+  }
+  
+  .movie:hover {
+    transform: translateY(-5px);
+  }
+  
+  /* Movie image styles */
+  .movie img {
+    width: 100%;
+    height: auto;
+    border-radius: 6px; /* Slightly reduced border-radius */
+  }
+  
+  /* Movie title styles */
+  .movie h2 {
+    font-size: 20px;
+    margin-top: 10px;
+    text-align: center;
+    color: #333; /* Darkened text color */
+  }
+  
+  /* Link styles */
+  a {
+    text-decoration: none;
+    color: #333;
+  }
+  
+  a:hover {
+    color: #555;
+  }
+
+  .button-container {
+    margin-top: 20px;
+}
+
+.button-container form {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.button-container form input[type="submit"] {
+    background-color: blue; 
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: background-color 0.3s;
+}
+
+.button-container form input[type="submit"]:hover {
+    background-color: #2196f3; 
+}

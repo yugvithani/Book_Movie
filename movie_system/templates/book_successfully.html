@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Success</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3f3f3;
+            text-align: center;
+            padding-top: 50px;
+        }
+        .success-message {
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            margin: auto;
+        }
+        .success-icon {
+            font-size: 48px;
+            color: #00cc00;
+            margin-bottom: 20px;
+        }
+        .message {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .total-amount {
+            font-size: 20px;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <div class="success-message">
+        <div class="success-icon">&#10004;</div>
+        <div class="message">Booking Successful!</div>
+        <div class="total-amount">Total amount paid: {{ total_amount }}</div>
+        <div class="wishes">Thank you for booking with us. Enjoy the show!</div>
+        <form action="{% url 'book_movie:my_booking' %}">
+            <button type="submit" class="btn btn-primary">My Booking</button>
+        </form>
+    </div>
+</body>
+</html>
